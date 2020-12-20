@@ -1,3 +1,4 @@
+Require Import Lia.
 Require Import Coq.Arith.PeanoNat.
 Require Import List.
 Import ListNotations.
@@ -12,7 +13,12 @@ Fixpoint vec_sum (l1 l2 : list nat) :=
 
 Lemma sum_of_vec_sum : forall l1 l2,
  list_sum (vec_sum l1 l2) = list_sum l1 + (list_sum l2).
-Admitted.
+induction l1 as [|h t IH]; intros.
+  - destruct l2; reflexivity.
+  - destruct l2.
+    + simpl. lia.
+    + simpl. rewrite IH. lia.
+Qed.
 
 Lemma list_sum_rev : forall l,
   list_sum l = list_sum (rev l).
