@@ -16,7 +16,13 @@ Admitted.
 
 Lemma list_sum_rev : forall l,
   list_sum l = list_sum (rev l).
-Admitted.
+Proof.
+  induction l as [|h t IH].
+  - reflexivity.
+  - simpl. rewrite list_sum_app. rewrite IH. Search (_ + _ = _ + _).
+  rewrite Nat.add_comm. simpl. rewrite <- plus_n_O.
+  reflexivity.
+Qed.
 
 Example gauss_trick_ex :
   vec_sum (rev (seq 0 3)) (seq 0 3) = repeat (pred 3) 3.
